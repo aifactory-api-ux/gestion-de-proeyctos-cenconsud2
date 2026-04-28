@@ -38,7 +38,7 @@ services:
       - POSTGRES_USER=cenconsud2_user
       - POSTGRES_PASSWORD=supersecret
       - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      - REDIS_PORT=6380
       - JWT_SECRET=change-me
       - LOG_LEVEL=INFO
     depends_on:
@@ -65,7 +65,7 @@ services:
       - POSTGRES_USER=cenconsud2_user
       - POSTGRES_PASSWORD=supersecret
       - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      - REDIS_PORT=6380
       - LOG_LEVEL=INFO
     depends_on:
       postgres:
@@ -91,7 +91,7 @@ services:
       - POSTGRES_USER=cenconsud2_user
       - POSTGRES_PASSWORD=supersecret
       - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      - REDIS_PORT=6380
       - LOG_LEVEL=INFO
     depends_on:
       postgres:
@@ -117,7 +117,7 @@ services:
       - POSTGRES_USER=cenconsud2_user
       - POSTGRES_PASSWORD=supersecret
       - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      - REDIS_PORT=6380
       - AUTH_SERVICE_URL=http://auth-service:8001
       - PROJECT_SERVICE_URL=http://project-service:8002
       - BUDGET_SERVICE_URL=http://budget-service:8003

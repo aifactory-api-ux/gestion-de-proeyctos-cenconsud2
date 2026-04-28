@@ -2,6 +2,9 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
+COPY shared/requirements.txt ./shared-requirements.txt
+RUN pip install --no-cache-dir -r shared-requirements.txt
+
 COPY budget-service/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
