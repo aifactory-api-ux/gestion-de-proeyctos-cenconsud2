@@ -1,0 +1,76 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install backend dependencies
+        run: |
+          pip install -r backend/shared/requirements.txt
+
+      - name: Lint backend code
+        run: |
+          python -m py_compile backend/shared/models.py
+          python -m py_compile backend/shared/db.py
+          python -m py_compile backend/shared/utils.py
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install frontend dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Docker Compose build
+        run: |
+          docker-compose build --parallel
+
+      - name: Run healthchecks
+        run: |
+          sleep 15
+          curl -sf http://localhost:8001/health
+          curl -sf http://localhost:8002/health
+          curl -sf http://localhost:8003/health
+          curl -sf http://localhost:8004/health
+
+  deploy:
+    needs: lint-and-test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Deploy to ECS
+        run: |
+          echo "Deployment would happen here with Terraform"
+          # terraform apply

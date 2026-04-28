@@ -1,0 +1,266 @@
+# API_CONTRACT.md
+
+## API Gateway (Aggregated Endpoints)
+
+### POST `/forecast`
+
+| Attribute        | Value                        |
+|------------------|-----------------------------|
+| HTTP Method      | POST                        |
+| Path             | /forecast                   |
+| Auth Required    | Yes                         |
+| Request Body     | `ForecastRequest`           |
+| Response        | `ForecastResponse`           |
+| Status Codes     | 200, 400, 404, 500          |
+
+#### Request Body: `ForecastRequest`
+| Field        | Type    | Required |
+|--------------|---------|----------|
+| project_id   | int     | Yes      |
+
+#### Response: `ForecastResponse`
+| Field           | Type      |
+|-----------------|-----------|
+| project_id      | int       |
+| forecasted_cost | float     |
+| confidence      | float     |
+| generated_at    | datetime  |
+
+#### Error Response: `ErrorResponse`
+| Field   | Type   |
+|---------|--------|
+| detail  | str    |
+
+---
+
+### GET `/projects/{project_id}`
+
+| Attribute        | Value                        |
+|------------------|-----------------------------|
+| HTTP Method      | GET                         |
+| Path             | /projects/{project_id}      |
+| Auth Required    | Yes                         |
+| Request Body     | None                        |
+| Response         | `Project`                   |
+| Status Codes     | 200, 404                    |
+
+#### Response: `Project`
+| Field         | Type        |
+|---------------|-------------|
+| id            | int         |
+| name          | str         |
+| description   | str (opt)   |
+| start_date    | date        |
+| end_date      | date        |
+| manager_id    | int         |
+| status        | str         |
+
+#### Error Response: `ErrorResponse`
+| Field   | Type   |
+|---------|--------|
+| detail  | str    |
+
+---
+
+### GET `/projects`
+
+| Attribute        | Value                        |
+|------------------|-----------------------------|
+| HTTP Method      | GET                         |
+| Path             | /projects                   |
+| Auth Required    | Yes                         |
+| Request Body     | None                        |
+| Response         | List[`Project`]             |
+| Status Codes     | 200, 500                    |
+
+#### Response: List of `Project`
+(see above for `Project` fields)
+
+#### Error Response: `ErrorResponse`
+| Field   | Type   |
+|---------|--------|
+| detail  | str    |
+
+---
+
+### GET `/budgets/{project_id}`
+
+| Attribute        | Value                        |
+|------------------|-----------------------------|
+| HTTP Method      | GET                         |
+| Path             | /budgets/{project_id}       |
+| Auth Required    | Yes                         |
+| Request Body     | None                        |
+| Response         | `Budget`                    |
+| Status Codes     | 200, 404                    |
+
+#### Response: `Budget`
+| Field             | Type      |
+|-------------------|-----------|
+| id                | int       |
+| project_id        | int       |
+| allocated_amount  | float     |
+| spent_amount      | float     |
+| forecasted_amount | float     |
+| last_updated      | datetime  |
+
+#### Error Response: `ErrorResponse`
+| Field   | Type   |
+|---------|--------|
+| detail  | str    |
+
+---
+
+### GET `/users/me`
+
+| Attribute        | Value                        |
+|------------------|-----------------------------|
+| HTTP Method      | GET                         |
+| Path             | /users/me                   |
+| Auth Required    | Yes                         |
+| Request Body     | None                        |
+| Response         | `User`                      |
+| Status Codes     | 200, 401                    |
+
+#### Response: `User`
+| Field      | Type   |
+|------------|--------|
+| id         | int    |
+| email      | str    |
+| full_name  | str    |
+| role       | str    |
+
+#### Error Response: `ErrorResponse`
+| Field   | Type   |
+|---------|--------|
+| detail  | str    |
+
+---
+
+## Backend Service Endpoints
+
+### Project Service
+
+#### GET `/projects/{project_id}`
+
+| Attribute        | Value                        |
+|------------------|-----------------------------|
+| HTTP Method      | GET                         |
+| Path             | /projects/{project_id}      |
+| Auth Required    | Yes                         |
+| Request Body     | None                        |
+| Response         | `Project`                   |
+| Status Codes     | 200, 404                    |
+
+#### GET `/projects`
+
+| Attribute        | Value                        |
+|------------------|-----------------------------|
+| HTTP Method      | GET                         |
+| Path             | /projects                   |
+| Auth Required    | Yes                         |
+| Request Body     | None                        |
+| Response         | List[`Project`]             |
+| Status Codes     | 200, 500                    |
+
+---
+
+### Budget Service
+
+#### GET `/budgets/{project_id}`
+
+| Attribute        | Value                        |
+|------------------|-----------------------------|
+| HTTP Method      | GET                         |
+| Path             | /budgets/{project_id}       |
+| Auth Required    | Yes                         |
+| Request Body     | None                        |
+| Response         | `Budget`                    |
+| Status Codes     | 200, 404                    |
+
+---
+
+### Forecast Service
+
+#### POST `/forecast`
+
+| Attribute        | Value                        |
+|------------------|-----------------------------|
+| HTTP Method      | POST                        |
+| Path             | /forecast                   |
+| Auth Required    | Yes                         |
+| Request Body     | `ForecastRequest`           |
+| Response         | `ForecastResponse`          |
+| Status Codes     | 200, 400, 404, 500          |
+
+---
+
+### Auth Service
+
+#### GET `/users/me`
+
+| Attribute        | Value                        |
+|------------------|-----------------------------|
+| HTTP Method      | GET                         |
+| Path             | /users/me                   |
+| Auth Required    | Yes                         |
+| Request Body     | None                        |
+| Response         | `User`                      |
+| Status Codes     | 200, 401                    |
+
+---
+
+## Data Contracts
+
+### Project
+
+| Field        | Type        | Required |
+|--------------|-------------|----------|
+| id           | int         | Yes      |
+| name         | str         | Yes      |
+| description  | str         | No       |
+| start_date   | date        | Yes      |
+| end_date     | date        | Yes      |
+| manager_id   | int         | Yes      |
+| status       | str         | Yes      |
+
+### Budget
+
+| Field             | Type      | Required |
+|-------------------|-----------|----------|
+| id                | int       | Yes      |
+| project_id        | int       | Yes      |
+| allocated_amount  | float     | Yes      |
+| spent_amount      | float     | Yes      |
+| forecasted_amount | float     | Yes      |
+| last_updated      | datetime  | Yes      |
+
+### ForecastRequest
+
+| Field        | Type    | Required |
+|--------------|---------|----------|
+| project_id   | int     | Yes      |
+
+### ForecastResponse
+
+| Field           | Type      | Required |
+|-----------------|-----------|----------|
+| project_id      | int       | Yes      |
+| forecasted_cost | float     | Yes      |
+| confidence      | float     | Yes      |
+| generated_at    | datetime  | Yes      |
+
+### User
+
+| Field      | Type   | Required |
+|------------|--------|----------|
+| id         | int    | Yes      |
+| email      | str    | Yes      |
+| full_name  | str    | Yes      |
+| role       | str    | Yes      |
+
+### ErrorResponse
+
+| Field   | Type   | Required |
+|---------|--------|----------|
+| detail  | str    | Yes      |
