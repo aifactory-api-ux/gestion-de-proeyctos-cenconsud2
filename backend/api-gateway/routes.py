@@ -8,7 +8,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from shared.models import (
     Project, Budget, ForecastRequest, ForecastResponse, User, ErrorResponse
 )
-from service import (
+from api_gateway.service import (
     aggregate_forecast,
     get_project_from_service,
     get_projects_from_service,

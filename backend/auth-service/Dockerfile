@@ -9,10 +9,10 @@ COPY auth-service/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY shared/ /app/shared/
-COPY auth-service/ /app/auth-service/
+COPY auth-service/ /app/auth_service/
 
 ENV PYTHONPATH=/app
 
 EXPOSE 8001
 
-CMD ["uvicorn", "auth-service.main:app", "--host", "0.0.0.0", "--port", "8001"]
+CMD ["uvicorn", "auth_service.main:app", "--host", "0.0.0.0", "--port", "8001"]

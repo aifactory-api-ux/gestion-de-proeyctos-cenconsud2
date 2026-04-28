@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 
 from shared.models import Budget, ErrorResponse
-from service import get_budget_by_project_id
+from budget_service.service import get_budget_by_project_id
 
 router = APIRouter()
 

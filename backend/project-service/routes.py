@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, status
 from typing import List
 
 from shared.models import Project, ErrorResponse
-from service import list_projects, get_project_by_id
+from project_service.service import list_projects, get_project_by_id
 
 router = APIRouter()
 
