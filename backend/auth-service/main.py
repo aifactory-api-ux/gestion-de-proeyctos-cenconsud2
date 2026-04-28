@@ -1,12 +1,11 @@
 import sys
 import os
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 from fastapi import FastAPI
 from shared.utils import setup_logging
-from routes import router as auth_router
+from auth_service.routes import router as auth_router
 
 setup_logging(level=os.getenv("LOG_LEVEL", "INFO"))
 

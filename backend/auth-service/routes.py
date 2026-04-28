@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 from shared.models import User, ErrorResponse
-from service import get_current_user
+from auth_service.service import get_current_user
 
 router = APIRouter()
 security = HTTPBearer()

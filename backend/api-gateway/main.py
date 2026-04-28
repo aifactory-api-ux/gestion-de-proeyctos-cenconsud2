@@ -1,13 +1,12 @@
 import sys
 import os
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from shared.utils import setup_logging
-from routes import router as gateway_router
+from api_gateway.routes import router as gateway_router
 
 setup_logging(level=os.getenv("LOG_LEVEL", "INFO"))
 
