@@ -9,10 +9,10 @@ COPY budget-service/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY shared/ /app/shared/
-COPY budget-service/ /app/budget-service/
+COPY budget-service/ /app/budget_service/
 
 ENV PYTHONPATH=/app
 
 EXPOSE 8003
 
-CMD ["uvicorn", "budget-service.main:app", "--host", "0.0.0.0", "--port", "8003"]
+CMD ["uvicorn", "budget_service.main:app", "--host", "0.0.0.0", "--port", "8003"]
