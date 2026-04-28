@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Project, User } from './types/models';
+import { useState } from 'react';
+import { User } from './types/models';
 import { ProjectList } from './components/ProjectList';
 import { ProjectDetails } from './components/ProjectDetails';
 import { BudgetSummary } from './components/BudgetSummary';
@@ -18,8 +18,8 @@ const MOCK_USER: User = {
 
 function App() {
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
-  const { projects, loading: projectsLoading, error: projectsError, fetchProjects } = useProjects();
-  const { budget, loading: budgetLoading, error: budgetError, fetchBudget } = useBudget(selectedProjectId);
+  const { projects, loading: projectsLoading, error: projectsError } = useProjects();
+  const { budget, fetchBudget } = useBudget(selectedProjectId);
   const { forecast, loading: forecastLoading, error: forecastError, fetchForecast } = useForecast(selectedProjectId);
 
   const selectedProject = projects.find(p => p.id === selectedProjectId);

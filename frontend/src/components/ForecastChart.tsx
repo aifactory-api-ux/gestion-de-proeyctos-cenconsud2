@@ -1,4 +1,3 @@
-import React from 'react';
 import { ForecastResponse } from '../types/models';
 import { formatCurrency, formatDateTime } from '../utils/format';
 
