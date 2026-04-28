@@ -30,7 +30,7 @@ services:
       context: ./backend
       dockerfile: auth-service/Dockerfile
     ports:
-      - "8001:8001"
+      - "8011:8001"
     environment:
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
@@ -57,7 +57,7 @@ services:
       context: ./backend
       dockerfile: project-service/Dockerfile
     ports:
-      - "8002:8002"
+      - "8012:8002"
     environment:
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
@@ -83,7 +83,7 @@ services:
       context: ./backend
       dockerfile: budget-service/Dockerfile
     ports:
-      - "8003:8003"
+      - "8013:8003"
     environment:
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
@@ -109,7 +109,7 @@ services:
       context: ./backend
       dockerfile: api-gateway/Dockerfile
     ports:
-      - "8004:8004"
+      - "8014:8004"
     environment:
       - POSTGRES_HOST=postgres
       - POSTGRES_PORT=5432
@@ -142,7 +142,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3010:3000"
     depends_on:
       api-gateway:
         condition: service_healthy
